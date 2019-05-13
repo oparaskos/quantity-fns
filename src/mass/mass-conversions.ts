@@ -1,4 +1,4 @@
-import { findConversionFactor  as f } from "./factor-convert";
+import { findConversionFactor  as f } from "../lib/factor-convert";
 
 /**
  * Object containing mappings from unit to their value in kilos
