@@ -1,3 +1,5 @@
+import { findConversionFactor  as f } from "./factor-convert";
+
 /**
  * Object containing mappings from unit to their value in kilos
  */
@@ -9,10 +11,4 @@ export const massConversions: {
     mg: 0.000001,
 };
 
-export function findConversionFactor(unit: string): number {
-    if (massConversions.hasOwnProperty(unit)) {
-        return massConversions[unit];
-    } else {
-        throw new Error("Unknown unit '" + unit + "'");
-    }
-}
+export const findConversionFactor = f.bind(null, massConversions);

@@ -1,5 +1,5 @@
 export interface IQuantity {
     quantity: number;
     unit: string;
-    type: "mass";
+    type: "mass" | "volume" | string;
 }

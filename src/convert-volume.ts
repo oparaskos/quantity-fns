@@ -1,6 +1,6 @@
 import { IQuantity } from "./quantity";
 import { factorConvert } from "./factor-convert";
-import { findConversionFactor } from "./mass-conversions";
+import { findConversionFactor } from "./volume-conversions";
 
 export function convert(input: IQuantity, targetUnits: string): IQuantity {
     return {
@@ -8,6 +8,6 @@ export function convert(input: IQuantity, targetUnits: string): IQuantity {
             findConversionFactor(input.unit),
             findConversionFactor(targetUnits)),
         unit: targetUnits,
-        type: "mass",
+        type: "volume",
     };
 }
