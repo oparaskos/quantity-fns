@@ -1,7 +1,12 @@
 {
   "name": "quantity-fns",
-  "version": "0.1.3",
-  "description": "Functions for dealing with and converting between quantities of mass, volume etc",
+  "version": "0.1.4",
+  "description": "Functions for dealing with and converting between quantities of mass, volume, density etc",
+  "keywords": [
+    "mass",
+    "volume",
+    "density"
+  ],
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist/",
@@ -18,8 +23,10 @@
   "license": "ISC",
   "devDependencies": {
     "@types/chai": "^4.1.7",
+    "@types/chai-almost": "^1.0.0",
     "@types/mocha": "^5.2.6",
     "chai": "^4.2.0",
+    "chai-almost": "^1.0.1",
     "mocha": "^6.1.4",
     "rimraf": "^2.6.3",
     "ts-node": "^8.1.0",

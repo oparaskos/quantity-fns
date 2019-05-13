@@ -1,6 +1,8 @@
-import { expect } from "chai";
+import { expect, use as chaiPlugin } from "chai";
 import { massToVolume } from "./mass-to-volume";
 import { DensityOf } from "../density/density-of";
+import almost from "chai-almost";
+chaiPlugin(almost());
 
 const testParams = [
     {
@@ -51,7 +53,7 @@ describe("massToVolume", () => {
     for (const { mass, density, expected } of testParams) {
         it(`should return ${mass.quantity}${mass.unit} of water = ${expected.quantity}${expected.unit}`, () => {
             const volume = massToVolume(mass, density, expected.unit);
-            expect(volume).to.deep.equal(expected);
+            expect(volume).to.deep.almost(expected);
         });
     }
 });

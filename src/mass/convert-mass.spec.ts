@@ -1,5 +1,7 @@
-import { expect } from "chai";
+import { expect, use as chaiPlugin } from "chai";
 import { convert } from "./convert-mass";
+import almost from "chai-almost";
+chaiPlugin(almost());
 
 const testParams = [
     { value: 1, source: "kg", expected: 1, target: "kg" },

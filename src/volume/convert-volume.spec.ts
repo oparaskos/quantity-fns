@@ -1,5 +1,7 @@
-import { expect } from "chai";
+import { expect, use as chaiPlugin } from "chai";
 import { convert } from "./convert-volume";
+import almost from "chai-almost";
+chaiPlugin(almost());
 
 const testParams = [
     { value: 1, source: "L", expected: 1, target: "L" },
@@ -15,7 +17,7 @@ describe("convert volume", () => {
                 unit: p.source,
                 type: "volume",
             }, p.target);
-            expect(conversion).to.deep.equal({
+            expect(conversion).to.deep.almost({
                 quantity: p.expected,
                 unit: p.target,
                 type: "volume",
