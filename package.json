@@ -1,13 +1,13 @@
 {
   "name": "quantity-fns",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Functions for dealing with and converting between quantities of mass, volume etc",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist/",
     "copy:package": "sed -e 's/\"private\": true/\"private\": false/' package.json > dist/package.json && cp package-lock.json README.md dist/",
     "build": "tsc && npm run copy:package",
-    "publish": "cd dist && npm publish",
+    "do-publish": "cd dist && npm publish",
     "test": "mocha  --require ts-node/register src/**/*.spec.ts"
   },
   "author": "Oliver Paraskos",
