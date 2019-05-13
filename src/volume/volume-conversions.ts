@@ -2,7 +2,7 @@ import { indexMappingTable } from "../lib/index-mapping-table";
 import { findConversionFactor as f } from "../lib/factor-convert";
 
 // equivelantTo refers to its value in litres
-const mappingTable: Array<{ unitNames: string[], equivelantTo: number }> = [
+export const mappingTable: Array<{ unitNames: string[], equivelantTo: number }> = [
     {
         unitNames: ["Ml", "ML", "megaliter", "megalitre", "megaliters", "megalitres",
             "dam^3", "dam3", "decameters cubed", "decametres cubed", "decameter cubed",
