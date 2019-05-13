@@ -18,8 +18,8 @@ convertMass({
 
 Converting from Millilitres to Litres
 ```
-import { convert as convertMass } from "quantity-fns/mass"
-convertMass({
+import { convert as convertVolume } from "quantity-fns/volume"
+convertVolume({
     unit: 'ml',
     quantity: 10,
     type: 'volume'
