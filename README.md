@@ -28,7 +28,7 @@ convertVolume({
 
 Calculating the mass of 1L of water
 ```
-import { convert as convertMass } from "quantity-fns/mass"
+import { volumeToMass } from "quantity-fns/volume"
 import { DensityOf } from "quantity-fns/density";
 volumeToMass({
     unit: 'ml',
