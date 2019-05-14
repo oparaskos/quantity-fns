@@ -1,4 +1,4 @@
-# Quantity Functions <!-- omit in toc -->
+# ⚖️ Quantity Functions <!-- omit in toc -->
 This library aims to provide a set of functions and utilities for conversion between units of mass, volume, and energy.
 
 At this early stage it is still missing many features and units (See [Notice](#notice)).
@@ -7,21 +7,35 @@ Please feel free to fork and raise a pull request to add functionailty you deem 
 
 
 ## Table of Contents <!-- omit in toc -->
-- [Getting Started](#getting-started)
-  - [Converting from kilos into grams](#converting-from-kilos-into-grams)
-  - [Converting from Millilitres to Litres](#converting-from-millilitres-to-litres)
-  - [Calculating the mass of 1L of water](#calculating-the-mass-of-1l-of-water)
-  - [Convert from Joules to Kilocalories](#convert-from-joules-to-kilocalories)
-- [Notice](#notice)
-- [License](#license)
-- [Contributions](#contributions)
+- [🏁 Getting Started](#%F0%9F%8F%81-getting-started)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Converting from kilos into grams](#converting-from-kilos-into-grams)
+    - [Converting from Millilitres to Litres](#converting-from-millilitres-to-litres)
+    - [Calculating the mass of 1L of water](#calculating-the-mass-of-1l-of-water)
+    - [Convert from Joules to Kilocalories](#convert-from-joules-to-kilocalories)
+  - [🛠️ Building](#%F0%9F%9B%A0%EF%B8%8F-building)
+- [⚠️ Notice](#%E2%9A%A0%EF%B8%8F-notice)
+- [📜 License](#%F0%9F%93%9C-license)
+- [💁 Contributions](#%F0%9F%92%81-contributions)
   - [Developer's Certificate of Origin 1.1](#developers-certificate-of-origin-11)
 
-## Getting Started
+## 🏁 Getting Started
 
 The below examples are given in TypeScript, but should be easily adapted to JavaScript. TypeScript definitions are bundled with the package.
 
-### Converting from kilos into grams
+### Installation
+The library is available as an npm package. To install a package run:
+
+```bash
+npm install quantity-fns --save
+# or with yarn
+yarn add quantity-fns
+```
+
+### Usage
+
+#### Converting from kilos into grams
 ```typescript
 import { convert as convertMass } from "quantity-fns/mass"
 convertMass({
@@ -31,7 +45,7 @@ convertMass({
 }, 'g') // === {unit: 'g', quantity: 10000}
 ```
 
-### Converting from Millilitres to Litres
+#### Converting from Millilitres to Litres
 ```typescript
 import { convert as convertVolume } from "quantity-fns/volume"
 convertVolume({
@@ -41,7 +55,7 @@ convertVolume({
 }, 'L') // === {unit: 'L', quantity: 10000}
 ```
 
-### Calculating the mass of 1L of water
+#### Calculating the mass of 1L of water
 ```typescript
 import { volumeToMass } from "quantity-fns/volume"
 import { DensityOf } from "quantity-fns/density";
@@ -52,7 +66,7 @@ volumeToMass({
 }, DensityOf.Water /*, "g"*/) // === {quantity: 100, unit: "g", type: "mass"}
 ```
 
-### Convert from Joules to Kilocalories
+#### Convert from Joules to Kilocalories
 ```typescript
 import { convert as convertEnergy } from "quantity-fns/energy"
 convertEnergy({
@@ -62,7 +76,23 @@ convertEnergy({
 }, 'kcal') // === { quantity: 0.02390057361376673, unit: 'kcal', type: 'energy' }
 ```
 
-## Notice
+### 🛠️ Building
+The library is written with TypeScript, and uses the Mocha and chai frameworks. It has no dependencies save for the scant development dependencies.
+
+The unit tests are using the Chai assertion framework.
+
+```bash
+# Clone the project using git
+git clone git@github.com:oparaskos/quantity-fns.git
+cd quantity-fns
+npm i # Install the dev dependencies
+# Run the tests using mocha, with ts-node
+npm run test
+# Produce the `dist/` folder containing javascript
+npm run build
+```
+
+## ⚠️ Notice
 
 At this early stage this library cannot be garunteed to be as accurate as needed for many use cases, there may exist flaws and issues inherent to any software project which are not tested against. For this reason libraries such as this one may not be suitable for mission critical applications such as medical devices.
 
@@ -70,7 +100,7 @@ If you do decide to use this library in such applications please be thorough in 
 
 However in the interest of developing this further you may wish to open a pull request against this library to test, prove and improve the accuracy of the results. This kind of contribution is greatly appreciated (See [Contributions](#contributions)).
 
-## License
+## 📜 License
 
 This Library and its source code is licensed under the ISC license.
 
@@ -82,7 +112,7 @@ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH RE
 
 Source: http://opensource.org/licenses/ISC
 
-## Contributions
+## 💁 Contributions
 
 Contributions can be made by submitting a pull request against the [github project](https://github.com/oparaskos/quantity-fns)
 
