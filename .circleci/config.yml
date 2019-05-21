@@ -47,3 +47,11 @@ jobs:
       - run:
           name: Publish package
           command: npm run do-publish
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - test
+      - deploy:
+          requires:
+            - test
