@@ -10,15 +10,26 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
             - v1-dependencies-
-      - run: npm ci
+      - run:
+          name: Install Dependencies
+          command: npm ci
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package-lock.json" }}
-      - run: npm test
-      - run: npm build
+      - run:
+          name: Run Unit Tests
+          command: npm test
+      - run:
+          name: Build TypeScript
+          command: npm build
       - save_cache:
           paths:
             - dist
           key: v1-dependencies-{{ checksum "package-lock.json" }}
-      - run: npm run do-publish
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+      - run:
+          name: Publish package
+          command: npm run do-publish
