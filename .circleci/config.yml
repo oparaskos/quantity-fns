@@ -28,7 +28,7 @@ jobs:
           command: npm test
       - run:
           name: Build TypeScript
-          command: npm build
+          command: npm run build
       - save_cache:
           paths:
             - dist/
