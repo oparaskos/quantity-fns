@@ -25,7 +25,11 @@ jobs:
           key: v1-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: Run Unit Tests
-          command: npm test
+          command: mkdir ~/junit && npm run test -- --reporter=xunit
+          environment:
+            MOCHA_FILE: ~/xunit/test-results.xml
+      - store_test_results:
+          path: ~/xunit
       - run:
           name: Build TypeScript
           command: npm run build
@@ -43,7 +47,7 @@ jobs:
           at: ~/repo
       - run:
           name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > .npmrc
       - run:
           name: Publish package
           command: npm run do-publish
