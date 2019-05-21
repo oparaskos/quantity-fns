@@ -1,10 +1,16 @@
 version: 2
+
+defaults: &defaults
+  docker:
+    - image: node:latest
+  working_directory: ~/repo
+
 jobs:
-  build:
-    docker:
-      - image: node:latest
-    working_directory: ~/repo
+  test:
+    <<: *defaults
     steps:
+      - attach_workspace:
+          at: ~/repo
       - checkout
       - restore_cache:
           keys:
@@ -25,8 +31,16 @@ jobs:
           command: npm build
       - save_cache:
           paths:
-            - dist
+            - dist/
           key: v1-dependencies-{{ checksum "package-lock.json" }}
+      - persist_to_workspace:
+          root: ~/repo
+          paths: dist/
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
