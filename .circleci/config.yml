@@ -35,7 +35,9 @@ jobs:
           key: v1-dependencies-{{ checksum "package-lock.json" }}
       - persist_to_workspace:
           root: ~/repo
-          paths: dist/
+          paths:
+            - dist/
+            - package*.json
   deploy:
     <<: *defaults
     steps:
