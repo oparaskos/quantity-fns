@@ -60,6 +60,3 @@ workflows:
       - deploy:
           requires:
             - test
-          filters:
-            tags:
-              only: /^[\d\.]+$/
