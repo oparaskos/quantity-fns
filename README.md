@@ -1,7 +1,10 @@
-![npm](https://img.shields.io/npm/v/quantity-fns.svg)
-![CircleCI](https://img.shields.io/circleci/build/gh/oparaskos/quantity-fns.svg)
-![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/quantity-fns.svg)
-![npm bundle size](https://img.shields.io/bundlephobia/min/quantity-fns.svg)
+[![quantity-fns | npm](https://img.shields.io/npm/l/quantity-fns.svg)
+![](https://img.shields.io/npm/v/quantity-fns.svg)
+](https://npmjs.com/quantity-fns)
+[![Package Size | BundlePhobia](https://img.shields.io/bundlephobia/min/quantity-fns.svg)](https://bundlephobia.com/result?p=quantity-fns)
+[![Vulnerability Analysis | Snyk](https://img.shields.io/snyk/vulnerabilities/npm/quantity-fns.svg)](https://snyk.io/test/npm/quantity-fns)
+[![CI Pipeline | CircleCI](https://img.shields.io/circleci/build/gh/oparaskos/quantity-fns.svg)](https://circleci.com/gh/oparaskos/quantity-fns)
+
 # ⚖️ Quantity Functions <!-- omit in toc -->
 This library aims to provide a set of functions and utilities for conversion between units of mass, volume, and energy.
 
