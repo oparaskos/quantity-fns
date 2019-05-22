@@ -1,11 +1,11 @@
 version: 2
 
 jobs:
-  test:
+  build:
     docker:
       - image: node:latest
     working_directory: ~/repo
-    build:
+    steps:
       - attach_workspace:
           at: ~/repo
       - checkout
@@ -44,3 +44,15 @@ jobs:
       - run:
           name: Publish package
           command: npm run do-publish
+
+workflows:
+  version: 2
+  main:
+    jobs:
+    - build:
+        filters:
+          branches:
+            only:
+             - develop
+             - master
+             - /feature.*/
