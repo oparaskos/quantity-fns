@@ -28,6 +28,10 @@ describe("parse quantity", () => {
         expect(() => parse("10")).to.throw();
     });
 
+    it("should throw if type not valid for unit", () => {
+        expect(() => parse("10 mm", { type: "volume" })).to.throw("mm is not a unit of volume");
+    });
+
     it("should throw if not given a value", () => {
         expect(() => parse("kg")).to.throw();
     });

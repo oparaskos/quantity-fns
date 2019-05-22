@@ -7,18 +7,13 @@ Please feel free to fork and raise a pull request to add functionailty you deem 
 
 
 ## Table of Contents <!-- omit in toc -->
-- [🏁 Getting Started](#%F0%9F%8F%81-getting-started)
-  - [Installation](#installation)
-  - [Usage](#usage)
-    - [Converting from kilos into grams](#converting-from-kilos-into-grams)
-    - [Converting from Millilitres to Litres](#converting-from-millilitres-to-litres)
-    - [Calculating the mass of 1L of water](#calculating-the-mass-of-1l-of-water)
-    - [Convert from Joules to Kilocalories](#convert-from-joules-to-kilocalories)
-  - [🛠️ Building](#%F0%9F%9B%A0%EF%B8%8F-building)
-- [⚠️ Notice](#%E2%9A%A0%EF%B8%8F-notice)
-- [📜 License](#%F0%9F%93%9C-license)
-- [💁 Contributions](#%F0%9F%92%81-contributions)
-  - [Developer's Certificate of Origin 1.1](#developers-certificate-of-origin-11)
+- [Clone the project using git](#clone-the-project-using-git)
+- [Run the tests using mocha, with ts-node](#run-the-tests-using-mocha-with-ts-node)
+- [Produce the `dist/` folder containing javascript](#produce-the-dist-folder-containing-javascript)
+  - [⚠️ Notice](#%E2%9A%A0%EF%B8%8F-notice)
+  - [📜 License](#%F0%9F%93%9C-license)
+  - [💁 Contributions](#%F0%9F%92%81-contributions)
+    - [Developer's Certificate of Origin 1.1](#developers-certificate-of-origin-11)
 
 ## 🏁 Getting Started
 
@@ -34,6 +29,14 @@ yarn add quantity-fns
 ```
 
 ### Usage
+
+#### Parsing a quantity
+```typescript
+import { parse } from "quantity-fns"
+parse("10 meters") // === { unit: 'meters', quantity: 10, type: 'distance' }
+parse("10 ml") // === { unit: 'ml', quantity: 10, type: 'volume' }
+parse("10 kg") // === { unit: 'kg', quantity: 10, type: 'mass' }
+parse("10 mi", {type: 'mass'}) // throws "mi is not a unit of mass"
 
 #### Converting from kilos into grams
 ```typescript
@@ -53,6 +56,16 @@ convertVolume({
     quantity: 10,
     type: 'volume'
 }, 'L') // === {unit: 'L', quantity: 10000}
+```
+
+#### Converting from Miles to Kilometers
+```typescript
+import { convert as convertDistance } from "quantity-fns/distance"
+convertDistance({
+    unit: 'mi',
+    quantity: 1,
+    type: 'distance'
+}, 'km') // === { unit: 'km', quantity: 1.609344 }
 ```
 
 #### Calculating the mass of 1L of water
