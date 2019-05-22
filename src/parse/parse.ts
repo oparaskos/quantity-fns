@@ -2,6 +2,7 @@ import { IQuantity } from "../lib/quantity";
 import { massConversions } from "../mass/mass-conversions";
 import { volumeConversions } from "../volume/volume-conversions";
 import { energyConversions } from "../energy/energy-conversions";
+import { distanceConversions } from "../distance/distance-conversions";
 
 export function parse(value: string, options?: {
     type?: string,
@@ -47,13 +48,15 @@ function isUnitOf(type: string, unit: string) {
             return volumeConversions.hasOwnProperty(unit);
         case "energy":
             return energyConversions.hasOwnProperty(unit);
+        case "distance":
+            return distanceConversions.hasOwnProperty(unit);
         default:
             throw new Error(`Unsupported or invalid quantity type ${type}`);
     }
 }
 
 function guessType(unit: string) {
-    const types = ["mass", "volume", "energy"];
+    const types = ["mass", "volume", "energy", "distance"];
     const candidates = types.filter((type) => isUnitOf(type, unit));
     if (candidates.length > 1) {
         // tslint:disable-next-line:no-console

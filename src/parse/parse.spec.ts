@@ -12,6 +12,8 @@ const testParams = [
         value: "1.003,1415 kg", withOpts: { decimalPlace: ",", thousandsSeperator: "." },
         expected: { type: "mass", quantity: 1003.1415, unit: "kg" },
     },
+    { value: "10mi", expected: { type: "distance", quantity: 10, unit: "mi" } },
+    { value: "38.2 km", expected: { type: "distance", quantity: 38.2, unit: "km" } },
 ];
 
 describe("parse quantity", () => {
