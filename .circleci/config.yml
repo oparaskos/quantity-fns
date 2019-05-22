@@ -57,7 +57,8 @@ general:
   branches:
     only:
       - master # list of branches to build
-      - /feature-.*/ # or regexes
+      - develop # list of branches to build
+      - /feature.*/ # or regexes
 
 workflows:
   version: 2
