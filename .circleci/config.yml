@@ -1,13 +1,14 @@
 version: 2
 
+defaults: &defaults
+  docker:
+    - image: node:latest
+  working_directory: ~/repo
+
 jobs:
-  build:
-    docker:
-      - image: node:latest
-    working_directory: ~/repo
+  prepare:
+    <<: *defaults
     steps:
-      - attach_workspace:
-          at: ~/repo
       - checkout
       - restore_cache:
           keys:
@@ -20,23 +21,37 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package-lock.json" }}
-      - run:
-          name: Run Unit Tests
-          command: mkdir ~/junit && npm run test -- --reporter=xunit
-          environment:
-            MOCHA_FILE: ~/xunit/test-results.xml
-      - store_test_results:
-          path: ~/xunit
-      - run:
-          name: Build TypeScript
-          command: npm run build
-      - save_cache:
-          paths:
-            - dist/
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
       - persist_to_workspace:
           root: ~/repo
           paths: .
+  build:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Build TypeScript
+          command: npm run build
+      - persist_to_workspace:
+          root: ~/repo
+          paths: dist/
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Run Unit Tests
+          command: mkdir ~/junit && npm run test -- --reporter mocha-multi-reporters
+          environment:
+            MOCHA_FILE: ~/junit/test-results.xml
+      - store_test_results:
+          path: ~/junit
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
@@ -44,15 +59,23 @@ jobs:
       - run:
           name: Publish package
           command: npm run do-publish
-
 workflows:
   version: 2
-  main:
+  deploy:
     jobs:
-    - build:
-        filters:
-          branches:
-            only:
-             - develop
-             - master
-             - /feature.*/
+      - prepare
+      - build:
+          requires:
+            - prepare
+      - test:
+          requires:
+            - prepare
+      - deploy:
+          requires:
+            - test
+            - build
+          filters:
+            branches:
+              only:
+                - master
+                - /release.*/
