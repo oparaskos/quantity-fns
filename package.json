@@ -1,6 +1,6 @@
 {
   "name": "quantity-fns",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Functions for dealing with and converting between quantities of mass, volume, density and energy",
   "keywords": [
     "mass",
