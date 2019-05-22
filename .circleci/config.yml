@@ -52,6 +52,13 @@ jobs:
       - run:
           name: Publish package
           command: npm run do-publish
+
+general:
+  branches:
+    only:
+      - master # list of branches to build
+      - /feature-.*/ # or regexes
+
 workflows:
   version: 2
   deploy:
@@ -60,3 +67,7 @@ workflows:
       - deploy:
           requires:
             - test
+          filters:
+            branches:
+              only:
+                - master
