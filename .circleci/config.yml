@@ -40,12 +40,15 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
+      - run: mkdir -p ~/junit
       - run:
           name: Run Unit Tests
-          command: mkdir ~/junit && npm run test -- --reporter mocha-multi-reporters
+          command: npm run test -- --reporter mocha-junit-reporter
           environment:
             MOCHA_FILE: ~/junit/test-results.xml
       - store_test_results:
+          path: ~/junit
+      - store_artifacts:
           path: ~/junit
   deploy:
     <<: *defaults
