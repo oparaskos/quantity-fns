@@ -1,8 +1,14 @@
 import { indexMappingTable } from "../lib/index-mapping-table";
 import { findConversionFactor as f } from "../lib/factor-convert";
 
+export interface IConversion {
+    unitNames: string[];
+    equivelantTo: number;
+    [additionalProperties: string]: any;
+}
+
 // equivelantTo refers to its value in litres
-export const mappingTable: Array<{ unitNames: string[], equivelantTo: number }> = [
+export const metric: IConversion[] = [
     {
         unitNames: ["Ml", "ML", "megaliter", "megalitre", "megaliters", "megalitres",
             "dam^3", "dam3", "decameters cubed", "decametres cubed", "decameter cubed",
@@ -38,18 +44,37 @@ export const mappingTable: Array<{ unitNames: string[], equivelantTo: number }> 
     },
     {
         unitNames: ["ml", "mL", "millilitre", "milliliter", "millilitres", "milliliters",
-            "cm3", "cm^3", "cc", "ccm", "centimeters cubed", "centimetres cubed",
-            "centimeter cubed", "centimetre cubed", "cubic centimetres", "cubic centimeters",
-            "cubic centimetre", "cubic centimeter"], equivelantTo: 1e-3,
+            "cc", "ccm",
+            ...cubed("centimeter", "centimeters", "cm"),
+            ...cubed("centimetre", "centimetres", "cm")], equivelantTo: 1e-3,
     },
     {
         unitNames: ["μl", "μL", "microlitre", "microliter", "microlitres", "microliters",
-            "mm3", "mm^3", "millimeters cubed", "millimetres cubed",
-            "millimeter cubed", "millimetre cubed", "cubic millimetres", "cubic millimeters",
-            "cubic millimetre", "cubic millimeter"], equivelantTo: 1e-6,
+            ...cubed("millimeter", "millimeters", "mm"),
+            ...cubed("millimetre", "millimetres", "mm")], equivelantTo: 1e-6,
     },
 ];
 
-export const volumeConversions: { [unit: string]: number; } = indexMappingTable(mappingTable);
+export const imperial: IConversion[] = [
+    { unitNames: cubed("inch", "inches", "in"), equivelantTo: 61.024 },
+    { unitNames: cubed("foot", "feet", "ft"), equivelantTo: 28.31685 },
+    { unitNames: cubed("yard", "yards", "yd"), equivelantTo: 764.5549},
+];
 
+function cubed(unitSingular: string, unitPlural: string, unitShort: string): string[] {
+    return [
+        `${unitShort}3`,
+        `${unitShort}^3`,
+        `${unitShort} cu`,
+        `cu ${unitShort}`,
+        `${unitSingular} cubed`,
+        `cubic ${unitSingular}`,
+        `${unitPlural} cubed`,
+        `cubic ${unitPlural}`,
+    ];
+}
+
+export const metricVolumeConversions: { [unit: string]: number; } = indexMappingTable(metric);
+export const imperialVolumeConversions: { [unit: string]: number; } = indexMappingTable(imperial);
+export const volumeConversions = { ...metricVolumeConversions, ...imperialVolumeConversions };
 export const findConversionFactor = f.bind(null, volumeConversions);
