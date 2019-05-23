@@ -1,8 +1,13 @@
 import { findConversionFactor as f } from "../lib/factor-convert";
 import { indexMappingTable } from "../lib/index-mapping-table";
 
+export interface IConversion {
+    unitNames: string[];
+    equivelantTo: number;
+    [additionalProperties: string]: any;
+}
 // equivelantTo refers to its value in kilos
-export const mappingTable: Array<{ unitNames: string[], equivelantTo: number }> = [
+export const metric: IConversion[] = [
     { unitNames: ["pg", "picogram", "picograms"], equivelantTo: 1e-15 },
     { unitNames: ["ng", "nanogram", "nanograms"], equivelantTo: 1e-12 },
     { unitNames: ["µg", "microgram", "micrograms"], equivelantTo: 1e-9 },
@@ -18,5 +23,14 @@ export const mappingTable: Array<{ unitNames: string[], equivelantTo: number }> 
     { unitNames: ["Tg", "teragram", "teragrams"], equivelantTo: 1e9 },
 ];
 
-export const massConversions: { [unit: string]: number; } = indexMappingTable(mappingTable);
+const POUND_IN_KILOS = 0.453592;
+export const imperial: IConversion[] = [
+    { unitNames: ["lb", "pound", "pounds"], equivelantTo: POUND_IN_KILOS },
+    { unitNames: ["oz", "ounce", "ounces"], equivelantTo: (1 / 16) * POUND_IN_KILOS },
+    { unitNames: ["t", "ton", "tons"], equivelantTo: 907.18474 },
+];
+
+export const metricConversions: { [unit: string]: number; } = indexMappingTable(metric);
+export const imperialConversions: { [unit: string]: number; } = indexMappingTable(imperial);
+export const massConversions: { [unit: string]: number; } = { ...metricConversions, ...imperialConversions };
 export const findConversionFactor = f.bind(null, massConversions);

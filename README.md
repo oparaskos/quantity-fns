@@ -18,11 +18,12 @@ Please feel free to fork and raise a pull request to add functionailty you deem 
   - [Installation](#installation)
   - [Usage](#usage)
     - [Parsing a quantity](#parsing-a-quantity)
-    - [Converting from kilos into grams](#converting-from-kilos-into-grams)
-    - [Converting from Millilitres to Litres](#converting-from-millilitres-to-litres)
-    - [Converting from Miles to Kilometers](#converting-from-miles-to-kilometers)
-    - [Calculating the mass of 1L of water](#calculating-the-mass-of-1l-of-water)
-    - [Convert from Joules to Kilocalories](#convert-from-joules-to-kilocalories)
+    - [Converting mass (eg. kilos into grams)](#converting-mass-eg-kilos-into-grams)
+    - [Converting volume (eg. Millilitres to Litres)](#converting-volume-eg-millilitres-to-litres)
+    - [Converting distance (eg. Miles to Kilometers)](#converting-distance-eg-miles-to-kilometers)
+    - [Calculating mass of volume and density (eg. 1L of water)](#calculating-mass-of-volume-and-density-eg-1l-of-water)
+    - [Convert energy (eg. Joules to Kilocalories)](#convert-energy-eg-joules-to-kilocalories)
+  - [Convert density (eg. lb/ft3 -> kg/m3)](#convert-density-eg-lbft3---kgm3)
   - [🛠️ Building](#%F0%9F%9B%A0%EF%B8%8F-building)
 - [⚠️ Notice](#%E2%9A%A0%EF%B8%8F-notice)
 - [📜 License](#%F0%9F%93%9C-license)
@@ -53,7 +54,7 @@ parse("10 kg") // === { unit: 'kg', quantity: 10, type: 'mass' }
 parse("10 mi", {type: 'mass'}) // throws "mi is not a unit of mass"
 ```
 
-#### Converting from kilos into grams
+#### Converting mass (eg. kilos into grams)
 ```typescript
 import { convert as convertMass } from "quantity-fns/mass"
 convertMass({
@@ -63,7 +64,7 @@ convertMass({
 }, 'g') // === {unit: 'g', quantity: 10000}
 ```
 
-#### Converting from Millilitres to Litres
+#### Converting volume (eg. Millilitres to Litres)
 ```typescript
 import { convert as convertVolume } from "quantity-fns/volume"
 convertVolume({
@@ -73,17 +74,17 @@ convertVolume({
 }, 'L') // === {unit: 'L', quantity: 10000}
 ```
 
-#### Converting from Miles to Kilometers
+#### Converting distance (eg. Miles to Kilometers)
 ```typescript
 import { convert as convertDistance } from "quantity-fns/distance"
 convertDistance({
     unit: 'mi',
     quantity: 1,
     type: 'distance'
-}, 'km') // === { unit: 'km', quantity: 1.609344 }
+}, 'km') // === { unit: 'km', quantity: 1.609 }
 ```
 
-#### Calculating the mass of 1L of water
+#### Calculating mass of volume and density (eg. 1L of water)
 ```typescript
 import { volumeToMass } from "quantity-fns/volume"
 import { DensityOf } from "quantity-fns/density";
@@ -94,14 +95,24 @@ volumeToMass({
 }, DensityOf.Water /*, "g"*/) // === {quantity: 100, unit: "g", type: "mass"}
 ```
 
-#### Convert from Joules to Kilocalories
+#### Convert energy (eg. Joules to Kilocalories)
 ```typescript
 import { convert as convertEnergy } from "quantity-fns/energy"
 convertEnergy({
     unit: 'J',
     quantity: 100,
     type: 'energy'
-}, 'kcal') // === { quantity: 0.02390057361376673, unit: 'kcal', type: 'energy' }
+}, 'kcal') // === { quantity: 0.0239, unit: 'kcal', type: 'energy' }
+```
+
+### Convert density (eg. lb/ft3 -> kg/m3)
+```typescript
+import { convert as convertDensity } from "quantity-fns/density"
+convertDensity({
+    unit: 'lb/ft3',
+    quantity: 1,
+    type: 'density'
+}, 'kg/m3') // === { quantity: 16.0184, unit: 'kg/m3', type: 'density' }
 ```
 
 ### 🛠️ Building
