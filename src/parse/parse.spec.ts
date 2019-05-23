@@ -14,6 +14,7 @@ const testParams = [
     },
     { value: "10mi", expected: { type: "distance", quantity: 10, unit: "mi" } },
     { value: "38.2 km", expected: { type: "distance", quantity: 38.2, unit: "km" } },
+    { value: "1.3 g/cm3", expected: { type: "density", quantity: 1.3, unit: "g/cm3" } },
 ];
 
 describe("parse quantity", () => {

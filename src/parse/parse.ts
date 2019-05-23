@@ -23,7 +23,7 @@ export function parse(value: string, options?: {
     }
     const unit = matches.groups.unit;
     const t = (options && options.type) || guessType(unit);
-    if (!isUnitOf(t, unit)) {
+    if (!unitIsOfType(t, unit)) {
         throw new Error(`${unit} is not a unit of ${t}`);
     }
     return {
@@ -40,7 +40,7 @@ function replaceAll(str: string, search: string, replacement: string): string {
     return str.replace(new RegExp(reEscape(search), "ig"), replacement);
 }
 
-function isUnitOf(type: string, unit: string) {
+function unitIsOfType(type: string, unit: string): boolean {
     switch (type) {
         case "mass":
             return massConversions.hasOwnProperty(unit);
@@ -50,14 +50,20 @@ function isUnitOf(type: string, unit: string) {
             return energyConversions.hasOwnProperty(unit);
         case "distance":
             return distanceConversions.hasOwnProperty(unit);
+        case "density":
+            if (unit.indexOf("/") <= -1) {
+                return false;
+            }
+            const [ massUnit, volumeUnit ] = unit.split("/");
+            return unitIsOfType("mass", massUnit) && unitIsOfType("volume", volumeUnit);
         default:
             throw new Error(`Unsupported or invalid quantity type ${type}`);
     }
 }
 
 function guessType(unit: string) {
-    const types = ["mass", "volume", "energy", "distance"];
-    const candidates = types.filter((type) => isUnitOf(type, unit));
+    const types = ["mass", "volume", "energy", "distance", "density"];
+    const candidates = types.filter((type) => unitIsOfType(type, unit));
     if (candidates.length > 1) {
         // tslint:disable-next-line:no-console
         console.warn(`Multiple candidates for ${unit} [${candidates.join(",")}]`);
