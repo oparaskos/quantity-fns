@@ -47,9 +47,9 @@ jobs:
           environment:
             MOCHA_FILE: ~/junit/test-results.xml
       - store_test_results:
-          path: ~/junit
+          path: ~/junit/test-results.xml
       - store_artifacts:
-          path: ~/junit
+          path: ~/junit/test-results.xml
   deploy:
     <<: *defaults
     steps:
