@@ -47,12 +47,23 @@ yarn add quantity-fns
 
 #### Parsing a quantity
 ```typescript
-import { parse } from "quantity-fns"
+import { parse, format } from "quantity-fns"
+// Parsing
 parse("10 meters") // === { unit: 'meters', quantity: 10, type: 'distance' }
 parse("10 ml") // === { unit: 'ml', quantity: 10, type: 'volume' }
 parse("10 kg") // === { unit: 'kg', quantity: 10, type: 'mass' }
 parse("10 mi", {type: 'mass'}) // throws "mi is not a unit of mass"
+parse("1,3 km", {locales: 'de-DE'}) //  === { unit: 'km', quantity: 1.3, type: 'distance' }
+
+// Formatting
+format(parse("1 km")) // === "1 km"
+
+// Formatting with locale
+format(parse("1.300,02 km", {locales: 'de-DE'})) // === "1,300.02 km"
+format(parse("1,300.02 km"), {locales: 'de-DE'}) // === "1.300,02 km"
 ```
+
+
 
 #### Converting mass (eg. kilos into grams)
 ```typescript
