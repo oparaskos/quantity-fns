@@ -34,7 +34,7 @@ describe("parse quantity", () => {
     });
 
     it("should throw if locale provided and not valid", () => {
-        expect(() => parse("10 mm", { locales: "sOmEwhErE_FaKE" })).to.throw("Invalid language tag: sOmEwhErE_FaKE");
+        expect(() => parse("10 mm", { locales: "somewhere_fake" })).to.throw("Invalid language tag: somewhere_fake");
     });
 
     it("should throw if not given a value", () => {

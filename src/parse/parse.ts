@@ -60,7 +60,7 @@ function getLocaleInfo(locales?: string | string[]): { thousands: string, decima
     if (!locales) {
         return { thousands: ",", decimal: "." };
     }
-    const formatted: string = Intl.NumberFormat(locales).format(1000.02);
+    const formatted: string = (Intl && Intl.NumberFormat(locales).format(1000.02)) || "1,000.02";
     return {
         thousands: (String as any).fromCodePoint((formatted as any).codePointAt(1)),
         decimal: (String as any).fromCodePoint((formatted as any).codePointAt(5)),
