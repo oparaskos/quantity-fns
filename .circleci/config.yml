@@ -43,10 +43,9 @@ jobs:
       - run: mkdir -p ~/repo/junit
       - run:
           name: Run Unit Tests
-          command: npm run test -- --reporter mocha-junit-reporter
+          command: npm run test -- --reporter mocha-junit-reporter || ls
           # environment:
           #   MOCHA_FILE: ~/repo/junit/test-results.xml
-      - run: ls
       - store_test_results:
           path: ~/repo/junit/test-results.xml
       - store_artifacts:
