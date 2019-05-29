@@ -44,8 +44,8 @@ jobs:
       - run:
           name: Run Unit Tests
           command: npm run test -- --reporter mocha-junit-reporter
-          environment:
-            MOCHA_FILE: ~/repo/junit/test-results.xml
+          # environment:
+          #   MOCHA_FILE: ~/repo/junit/test-results.xml
       - store_test_results:
           path: ~/repo/junit/test-results.xml
       - store_artifacts:
