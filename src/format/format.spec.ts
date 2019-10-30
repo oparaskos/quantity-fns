@@ -17,9 +17,9 @@ const testParams = [
     { expected: "1.3 g/cm3", value: { type: "density", quantity: 1.3, unit: "g/cm3" } },
 ];
 
-describe("parse quantity", () => {
+describe("format quantity", () => {
     for (const p of testParams) {
-        it(`should parse '${p.value}' as '${JSON.stringify(p.expected)}'`, () => {
+        it(`should format '${JSON.stringify(p.value)}' as '${p.expected}'`, () => {
             const conversion = format(p.value, p.withOpts);
             expect(conversion).to.deep.almost(p.expected);
         });

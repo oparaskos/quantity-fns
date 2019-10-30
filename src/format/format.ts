@@ -2,12 +2,16 @@ import { IQuantity } from "../lib/quantity";
 
 export function format(
     quantity: IQuantity,
-    options?: { locales: string[] }): string {
+    options?: { locales?: string[], includeType?: boolean | undefined }): string {
 
     let amount = "" + quantity.quantity;
     if (Intl) {
         amount = Intl.NumberFormat(options && options.locales || "en-GB")
             .format(quantity.quantity);
     }
-    return `${amount} ${quantity.unit}`;
+    let result = `${amount} ${quantity.unit}`;
+    if (options && options.includeType) {
+        result += ` (${quantity.type})`;
+    }
+    return result;
 }
