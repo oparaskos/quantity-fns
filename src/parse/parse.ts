@@ -6,38 +6,23 @@ import { distanceConversions } from "../distance/distance-conversions";
 
 export function parse(value: string, options?: {
     type?: string,
-    thousandsSeperator?: string,
-    decimalPlace?: string }): IQuantity {
-
-    const decimalPlace = (options && options.decimalPlace) || ".";
-    const thousandsSeperator = (options && options.thousandsSeperator) || ",";
-    const matches: any = replaceAll(value.trim(), thousandsSeperator, "")
-        .match(/(?<quantity>[\d\.,]+)\s*(?<unit>.+)/i);
+    locales?: string | string[],
+}): IQuantity {
+    const matches: any = value.trim()
+    .match(/(?<quantity>[\d\.,]+)\s*(?<unit>.+)/i);
     if (!matches || Object.keys(matches.groups).length !== 2) {
         throw new Error("Expected value to start with a numeric string and ending with a unit");
     }
-    const fixDecimal = replaceAll(matches.groups.quantity, decimalPlace, ".");
-    const v = parseFloat(fixDecimal);
-    if (isNaN(v)) {
-        throw new Error(`Failed to parse numeric value parseFloat(${matches.groups.quantity}) was ${v}`);
+    const quantity = normaliseNumber(matches.groups.quantity, options && options.locales);
+    if (isNaN(quantity)) {
+        throw new Error(`Failed to parse numeric value parseFloat(${matches.groups.quantity}) was ${quantity}`);
     }
     const unit = matches.groups.unit;
-    const t = (options && options.type) || guessType(unit);
-    if (!unitIsOfType(t, unit)) {
-        throw new Error(`${unit} is not a unit of ${t}`);
+    const type = (options && options.type) || guessType(unit);
+    if (!unitIsOfType(type, unit)) {
+        throw new Error(`${unit} is not a unit of ${type}`);
     }
-    return {
-        type: t,
-        quantity: v,
-        unit,
-    };
-}
-
-function replaceAll(str: string, search: string, replacement: string): string {
-    function reEscape(toEscape: string): string {
-        return "\\" + toEscape.split("").join("\\");
-    }
-    return str.replace(new RegExp(reEscape(search), "ig"), replacement);
+    return { type, quantity, unit };
 }
 
 function unitIsOfType(type: string, unit: string): boolean {
@@ -54,7 +39,7 @@ function unitIsOfType(type: string, unit: string): boolean {
             if (unit.indexOf("/") <= -1) {
                 return false;
             }
-            const [ massUnit, volumeUnit ] = unit.split("/");
+            const [massUnit, volumeUnit] = unit.split("/");
             return unitIsOfType("mass", massUnit) && unitIsOfType("volume", volumeUnit);
         default:
             throw new Error(`Unsupported or invalid quantity type ${type}`);
@@ -69,4 +54,21 @@ function guessType(unit: string) {
         console.warn(`Multiple candidates for ${unit} [${candidates.join(",")}]`);
     }
     return candidates[0];
+}
+
+function getLocaleInfo(locales?: string | string[]): { thousands: string, decimal: string } {
+    if (!locales) {
+        return { thousands: ",", decimal: "." };
+    }
+    const formatted: string = (Intl && Intl.NumberFormat(locales).format(1000.02)) || "1,000.02";
+    return {
+        thousands: (String as any).fromCodePoint((formatted as any).codePointAt(1)),
+        decimal: (String as any).fromCodePoint((formatted as any).codePointAt(5)),
+    };
+}
+
+function normaliseNumber(num: string, locales?: string | string[]): number {
+    const localeInfo = getLocaleInfo(locales);
+    return parseFloat(num.split(localeInfo.thousands).join("")
+        .split(localeInfo.decimal).join("."));
 }

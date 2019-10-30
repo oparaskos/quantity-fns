@@ -9,7 +9,7 @@ const testParams = [
     { value: "1.75 kg", expected: { type: "mass", quantity: 1.75, unit: "kg" } },
     { value: "31,415 kg", expected: { type: "mass", quantity: 31415, unit: "kg" } },
     {
-        value: "1.003,1415 kg", withOpts: { decimalPlace: ",", thousandsSeperator: "." },
+        value: "1.003,1415 kg", withOpts: { locales: "de-DE" },
         expected: { type: "mass", quantity: 1003.1415, unit: "kg" },
     },
     { value: "10mi", expected: { type: "distance", quantity: 10, unit: "mi" } },
@@ -31,6 +31,10 @@ describe("parse quantity", () => {
 
     it("should throw if type not valid for unit", () => {
         expect(() => parse("10 mm", { type: "volume" })).to.throw("mm is not a unit of volume");
+    });
+
+    it("should throw if locale provided and not valid", () => {
+        expect(() => parse("10 mm", { locales: "somewhere_fake" })).to.throw("Invalid language tag: somewhere_fake");
     });
 
     it("should throw if not given a value", () => {
