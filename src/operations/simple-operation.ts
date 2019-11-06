@@ -1,5 +1,5 @@
-import { IQuantity } from "../lib/quantity";
-import { convert } from "../lib/convert";
+import { IQuantity } from "../quantity";
+import { convert } from "./convert";
 
 /**
  * Perform some operation on two quantities after converting to same unit.

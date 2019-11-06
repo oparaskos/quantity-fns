@@ -14,7 +14,7 @@ Please feel free to fork and raise a pull request to add functionailty you deem 
 
 
 ## Table of Contents <!-- omit in toc -->
-- [🏁 Getting Started](#%F0%9F%8F%81-getting-started)
+- [🏁 Getting Started](#%f0%9f%8f%81-getting-started)
   - [Installation](#installation)
   - [Usage](#usage)
     - [Parsing a quantity](#parsing-a-quantity)
@@ -23,11 +23,12 @@ Please feel free to fork and raise a pull request to add functionailty you deem 
     - [Converting distance (eg. Miles to Kilometers)](#converting-distance-eg-miles-to-kilometers)
     - [Calculating mass of volume and density (eg. 1L of water)](#calculating-mass-of-volume-and-density-eg-1l-of-water)
     - [Convert energy (eg. Joules to Kilocalories)](#convert-energy-eg-joules-to-kilocalories)
-  - [Convert density (eg. lb/ft3 -> kg/m3)](#convert-density-eg-lbft3---kgm3)
-  - [🛠️ Building](#%F0%9F%9B%A0%EF%B8%8F-building)
-- [⚠️ Notice](#%E2%9A%A0%EF%B8%8F-notice)
-- [📜 License](#%F0%9F%93%9C-license)
-- [💁 Contributions](#%F0%9F%92%81-contributions)
+    - [Convert density (eg. lb/ft3 -> kg/m3)](#convert-density-eg-lbft3---kgm3)
+    - [Convert quantities with unknown types](#convert-quantities-with-unknown-types)
+  - [🛠️ Building](#%f0%9f%9b%a0%ef%b8%8f-building)
+- [⚠️ Notice](#%e2%9a%a0%ef%b8%8f-notice)
+- [📜 License](#%f0%9f%93%9c-license)
+- [💁 Contributions](#%f0%9f%92%81-contributions)
   - [Developer's Certificate of Origin 1.1](#developers-certificate-of-origin-11)
 
 ## 🏁 Getting Started
@@ -62,8 +63,6 @@ format(parse("1 km")) // === "1 km"
 format(parse("1.300,02 km", {locales: 'de-DE'})) // === "1,300.02 km"
 format(parse("1,300.02 km"), {locales: 'de-DE'}) // === "1.300,02 km"
 ```
-
-
 
 #### Converting mass (eg. kilos into grams)
 ```typescript
@@ -116,7 +115,7 @@ convertEnergy({
 }, 'kcal') // === { quantity: 0.0239, unit: 'kcal', type: 'energy' }
 ```
 
-### Convert density (eg. lb/ft3 -> kg/m3)
+#### Convert density (eg. lb/ft3 -> kg/m3)
 ```typescript
 import { convert as convertDensity } from "quantity-fns/density"
 convertDensity({
@@ -124,6 +123,19 @@ convertDensity({
     quantity: 1,
     type: 'density'
 }, 'kg/m3') // === { quantity: 16.0184, unit: 'kg/m3', type: 'density' }
+```
+
+#### Convert quantities with unknown types
+For applications where the type of the unit is not known but conversion
+is needed you can call the `convert` function exported from the package root.
+
+```typescript
+import { convert } from "quantity-fns"
+convert({
+    unit: 'lb/ft3',
+    quantity: 1,
+    type: 'density'
+}, 'kg/m3') // Recognises the `type` 'density' and converts density as normal.
 ```
 
 ### 🛠️ Building

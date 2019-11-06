@@ -1,4 +1,4 @@
-import { IQuantity } from "../lib/quantity";
+import { IQuantity } from "../quantity";
 import { reduceQuantities } from "./simple-operation";
 
 /**

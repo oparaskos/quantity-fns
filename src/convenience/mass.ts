@@ -1,4 +1,4 @@
-import { IQuantity } from "../lib/quantity";
+import { IQuantity } from "../quantity";
 
 export function grams(quantity: number): IQuantity {
     return { unit: "g", type: "mass", quantity };

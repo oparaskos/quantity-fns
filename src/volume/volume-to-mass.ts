@@ -1,4 +1,4 @@
-import { IQuantity } from "../lib/quantity";
+import { IQuantity } from "../quantity";
 
 import { convert as massConvert } from "../mass/convert-mass";
 import { convert as volConvert } from "./convert-volume";
