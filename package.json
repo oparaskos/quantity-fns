@@ -41,7 +41,7 @@
     "@types/mocha": "^5.2.6",
     "chai": "^4.2.0",
     "chai-almost": "^1.0.1",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "mocha-junit-reporter": "^1.22.0",
     "mocha-multi-reporters": "^1.1.7",
     "rimraf": "^2.6.3",
